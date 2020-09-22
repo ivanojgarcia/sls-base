@@ -1,0 +1,82 @@
+service: a-go-ms-examens
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'poc'}
+  region: us-east-1
+  # iamRoleStatements:
+  #   - Effect: Allow
+  #     Action:
+  #       - dynamodb:Query
+  #       - dynamodb:Scan
+  #       - dynamodb:GetItem
+  #       - dynamodb:PutItem
+  #       - dynamodb:UpdateItem
+  #       - dynamodb:DeleteItem
+  #       - dynamodb:DescribeStream
+  #       - dynamodb:ListStreams
+  #     Resource:
+  #       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.NAME_TABLE}/*" # Query / Get / Scan
+  #       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.NAME_TABLE}" # PUT"
+  #       - "arn:aws:sns:us-east-1:#{AWS::AccountId}:EndPointPlatform "
+  #       - "arn:aws:sns:us-east-1:#{AWS::AccountId}:app/GCM/EndPointPlatform"
+  #       - "arn:aws:sqs:${opt:region, self:provider.region}:*:${self:provider.environment.QUEUE_NAME}.fifo"
+
+  environment:
+    STAGE: ${file(app/config/config.${self:provider.stage}.json):STAGE}
+
+# resources:
+#   - ${file(resources/name-table.yml)}
+
+
+functions:
+  # Example with SQS and Streams
+  # auth:
+  #   handler: app/middleware/auth.handler
+  # sqsName:
+  #   handler: app/functions/sqsName.handler
+  #   events:
+  #     - sqs:
+  #         arn: arn:aws:sqs:${self:provider.region}:#{AWS::AccountId}:Name-${self:provider.stage}.fifo
+  #         batchSize: 1 #max Size 10
+  # serviceProcessStreams:
+  #   handler: app/functions/serviceStreams.handler
+  #   events:
+  #     - stream: 
+  #         type: dynamodb
+  #         batchSize: 1
+  #         startingPosition: LATEST
+  #         arn: "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/prefix-dynamodb-${self:provider.stage}-name/stream/${self:provider.environment.STREAM_ARN}"
+
+  hello:
+    handler: app/functions/hello.handler
+    description: Endpoint hello world! 
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+          # authorizer: auth
+custom:
+  allowedHeaders:
+    - Accept
+    - Content-Type
+    - Content-Lenght
+    - Authorization
+    - X-Amz-Date
+    - X-Api-Key
+    - X-Amz-Security-Token
+    - X-Amz-User-Agent
+  serverless-offline:
+    useChildProcesses: true #for not reload offline plugins
+# Exclude the dependencies associate to node_modules for uploads light
+package:
+  individually: true
+
+plugins:
+  - serverless-offline
+  - serverless-pseudo-parameters
+  - serverless-plugin-optimize
