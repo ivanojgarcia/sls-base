@@ -3,7 +3,7 @@ service: a-go-ms-examens
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage, 'poc'}
+  stage: ${opt:stage, 'dev'}
   region: us-east-1
   # iamRoleStatements:
   #   - Effect: Allow
