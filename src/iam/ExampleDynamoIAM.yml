@@ -1,0 +1,16 @@
+ ExampleDynamoIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - lambda:InvokeFunction
+    - dynamodb:BatchWriteItem
+  Resource:
+    - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.USER_TABLE}"
+    - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.USER_TABLE}/*"
+    - "arn:aws:lambda:us-east-1:${self:provider.environment.ACCOUNT_ID}:function:${self:service}-${self:provider.stage}-getuserByPpnFromLambda" # ARN for invoke a lambda
+    - "arn:aws:lambda:us-east-1:${self:provider.environment.ACCOUNT_ID}:function:${self:service}-${self:provider.stage}-getUserByUsernameFromLambda" # ARN for invoke a lambda
+    

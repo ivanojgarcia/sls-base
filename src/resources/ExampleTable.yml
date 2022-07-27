@@ -1,10 +1,9 @@
-Resources:
   # **** Name Tables ****
   NameDBTable:
     Type: 'AWS::DynamoDB::Table'
     DeletionPolicy: Retain # Prevents a table from being dropped by mistake
     Properties:
-      TableName: ${self:provider.environment.NAME_TABLE}
+      TableName: ${self:provider.environment.EXAMPLE_TABLE}
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: nameId

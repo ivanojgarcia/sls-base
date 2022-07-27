@@ -1,12 +1,14 @@
 {
-  "name": "a-go-ms-examens",
+  "name": "sls-base",
   "version": "1.0.0",
   "description": "Microservices for the management of examination records",
   "main": "handler.js",
   "scripts": {
     "test-dev": "STAGE=test jest",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "offline": "sls offline start --httpPort 3004 --lambdaPort 3006"
+    "offline": "sls offline start --httpPort 3004 --lambdaPort 3006",
+    "sls": "serverless",
+    "npm-check": "npm-check"
   },
   "jest": {
     "collectCoverage": true,
@@ -30,17 +32,19 @@
   "author": "Ivano J. García",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^26.2.2",
-    "serverless-offline": "^6.5.0",
+    "jest": "^28.1.3",
+    "serverless": "^3.21.0",
+    "serverless-offline": "^9.0.0",
     "serverless-plugin-optimize": "^4.1.4-rc.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.726.0",
-    "dotenv": "^8.2.0",
-    "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
-    "node-fetch": "^2.6.0",
-    "serverless-pseudo-parameters": "^2.5.0",
-    "uuid": "^8.3.0"
+    "aws-sdk": "^2.1182.0",
+    "dotenv": "^16.0.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.34",
+    "node-fetch": "^3.2.9",
+    "npm-check": "^6.0.1",
+    "uuid": "^8.3.2",
+    "winston": "^3.8.1"
   }
 }
