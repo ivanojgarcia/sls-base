@@ -16,8 +16,6 @@ Base for create a project in serverless framework
 sls create --name YOUR_PROJECT_NAME --template-url https://github.com/ivanojgarcia/sls-base
 cd YOUR_PROJECT_NAME
 npm install
-npm run update-packages // Command for update the node modules packages
-npm install // To update the package
 ```
 
 ## Execute the serverless local CLI
@@ -37,4 +35,5 @@ Examples:
 
 ## Update the dependence
 
-
+To update the dependence yo must run the command `npm run npm-check` for check the update, after that execute the command to update the dependecies `npm run npm-check -- -u`
+the reference [here](https://www.npmjs.com/package/npm-check)
